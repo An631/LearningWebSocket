@@ -1,6 +1,7 @@
 var WebSocketServer = require("websocket").server;
 var server = require("http").createServer();
 var clients = [];
+var port = 49153;
 
 // Configure the websocket
 var ws = new WebSocketServer({
@@ -10,8 +11,8 @@ var ws = new WebSocketServer({
 
 // Start the WebSocket and server
 ws.on("connect",connectHandler);
-server.listen(9999);
-console.log("RockPaperScissor listening on port 9999:");
+server.listen(port);
+console.log("RockPaperScissor listening on port: "+port);
 
 // Set a timeout for server to play with a random client every 3 seconds
 setTimeout(sendMessage, 3000);

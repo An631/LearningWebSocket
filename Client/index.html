@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script src="webSocketController.js"></script>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <title>
+             UltimateRockPaperScissorServerReloadedTenkaichiBudokaiOmega
+        </title>
+
+    </head>
+    <body>
+         <div>UltimateRockPaperScissorServerReloadedTenkaichiBudokaiOmega</div>
+         <br/>
+         <div> SERVER GAME </div>
+         <div id = "server-game" class="container">
+            <div id="server-incoming">Waiting on server message...</div>
+            <div id="client-response"></div>
+            <div id="server-client-result"></div>
+         </div>
+
+         <div>CLIENT GAME</div>
+         <div id = "client-game" class="container">
+            <img class="clickable" src="./images/rock.png" onclick="sendChoice('Rock')" width="100px">
+            <img class="clickable" src="./images/paper.png" onclick="sendChoice('Paper')" width="100px">
+            <img class="clickable" src="./images/scissors.png" onclick="sendChoice('Scissors')" width="100px">
+            <div id="client-outgoing">Waiting for user selection...</div>
+            <div id="server-response"></div>
+            <div id="client-server-result"></div>
+         </div>
+         <span>Global Score: </span><div id="score"></div>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+.container{
+    margin: 20px;
+    padding:20px;
+    border: 1px solid #ddd;
+}
+
+.clickable{
+    cursor:pointer;
+}
+
+.clickable:hover{
+    box-shadow: #ddd;
+    border-bottom: solid 2px orange;
+}

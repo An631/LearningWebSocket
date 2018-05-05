@@ -1,8 +1,11 @@
 {
-  "name": "Server",
+  "name": "RockPaperScissors",
   "version": "1.0.0",
-  "description": "",
+  "description": "A rock paper scissor simulator",
   "main": "index.js",
+    "engines": {
+      "node": "8.9.4"
+    },
   "dependencies": {
     "websocket": "^1.0.26"
   },

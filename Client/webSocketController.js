@@ -9,7 +9,6 @@ var clientResponse;
 var serverClientResult;
 
 var scoreUI;
-
 var ws;
 
 function setupConnection(){
@@ -22,7 +21,10 @@ function setupConnection(){
     serverClientResult = document.getElementById("server-client-result");
 
     scoreUI = document.getElementById("score");
-    ws = new WebSocket("ws://learning-web-socket.herokuapp.com:9999/");
+    
+    
+    
+    ws = new WebSocket("wss://learning-web-socket.herokuapp.com/");
     
     ws.addEventListener("open",()=>{
         console.log("Connection started");

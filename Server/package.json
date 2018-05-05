@@ -1,7 +1,7 @@
 {
-  "name": "RockPaperScissors",
+  "name": "rockpaperscissor",
   "version": "1.0.0",
-  "description": "A rock paper scissor simulator",
+  "description": "A rock paper scissors simulator",
   "main": "index.js",
     "engines": {
       "node": "8.9.4"

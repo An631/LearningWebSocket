@@ -1,4 +1,4 @@
-# LearningWebSocket
+# UltimateRockPaperScissorSimulator.
 Get ready to be immersed in the ultimate gaming experience with the latest rock paper scissor virtual simulator!!!
 
 Based on the revolutionary web sockete technology this game does the following:

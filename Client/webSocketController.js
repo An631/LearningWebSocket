@@ -29,7 +29,6 @@ function setupConnection(){
     },false);
 
     ws.addEventListener("message", (e) => {
-        
         var str = e.data;
         var msg = parseMsg(str);
         switch(msg.type){
@@ -92,7 +91,7 @@ window.addEventListener("load",setupConnection,false);
 
 // ON HTML FUNCTIONS:
 function sendChoice(selection){
-    
+    // TODO: Check for connection state before sending msg
     clientOutgoing.innerHTML = "You: "+selection;
     ws.send(selection);
 }

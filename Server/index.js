@@ -1,7 +1,7 @@
 var WebSocketServer = require("websocket").server;
 var server = require("http").createServer();
 var clients = [];
-var port = 49153;
+var port = process.env.PORT || 9999;
 
 // Configure the websocket
 var ws = new WebSocketServer({

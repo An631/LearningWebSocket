@@ -9,14 +9,6 @@ var ws = new WebSocketServer({
     autoAcceptConnections:true
 });
 
-// Start the WebSocket and server
-ws.on("connect",connectHandler);
-server.listen(port);
-console.log("RockPaperScissor listening on port: "+port);
-
-// Set a timeout for server to play with a random client every 3 seconds
-setTimeout(sendMessage, 3000);
-
 // CONNECTION HANDLER FUNCTIONS //
 
 // Handles new connections from clients.
@@ -83,3 +75,11 @@ function pickRandomHand(){
     }
     return serverChoice;
 }
+
+// INITIALIZE SERVER //
+ws.on("connect", connectHandler);
+server.listen(port);
+console.log("RockPaperScissor listening on port: " + port);
+
+// Set a timeout for server to play with a random client every 3 seconds
+setTimeout(sendMessage, 3000);

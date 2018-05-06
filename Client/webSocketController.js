@@ -14,6 +14,8 @@ var serverClientResult;
 var scoreUI;
 var ws;
 
+// GAME LOGIC FUNCTIONS //
+
 // Starts the game by initializing all of its components
 function initiliazeGame(){
     setupUIElements();
@@ -79,13 +81,15 @@ function setupConnection(){
     }, false);
 }
 
-// ON HTML FUNCTIONS:
+// ON HTML FUNCTIONS //
 function sendChoice(selection){
     // TODO: Check for connection state before sending msg
     clientOutgoing.innerHTML = "You: "+selection;
     if(ws.readyState !== ws.OPEN) setupConnection();        
         ws.send(selection);
 }
+
+// UTILITY FUNCTIONS //
 
 // Parses a str with the form "origin-clientMsg-serverMsg"
 // Sends back an object with the following properties:
@@ -137,5 +141,5 @@ function pickRandomHand() {
     return choice;
 }
 
-// INITIALIZE GAME:
+// INITIALIZE GAME //
 window.addEventListener("load", initiliazeGame, false);

@@ -1,4 +1,7 @@
+const host = "wss://learning-web-socket.herokuapp.com/"
+//const host = "ws://127.0.0.1:9999/"
 var score = 0;
+
 // DEFINE UI ELEMENTS
 var clientOutgoing;
 var serverResponse;
@@ -11,7 +14,15 @@ var serverClientResult;
 var scoreUI;
 var ws;
 
-function setupConnection(){
+// Starts the game by initializing all of its components
+function initiliazeGame(){
+    setupUIElements();
+    setupConnection();
+}
+
+// Grabs all UI elements and intializes the variables used
+// to access them.
+function setupUIElements(){
     clientOutgoing = document.getElementById("client-outgoing");
     serverResponse = document.getElementById("server-response");
     clientServerResult = document.getElementById("client-server-result");
@@ -21,10 +32,12 @@ function setupConnection(){
     serverClientResult = document.getElementById("server-client-result");
 
     scoreUI = document.getElementById("score");
-    
-    
-    
-    ws = new WebSocket("wss://learning-web-socket.herokuapp.com/");
+}
+
+// Initiates a connection with the websocket server and 
+// setting up its connection listeners
+function setupConnection(){
+    ws = new WebSocket(host);
     
     ws.addEventListener("open",()=>{
         console.log("Connection started");
@@ -38,18 +51,7 @@ function setupConnection(){
                 console.log("Received a response to client message: " + msg.responseValue);
                 serverResponse.innerHTML = "Server: "+msg.responseValue;
                 var gameResult = checkWin(msg.requestValue, msg.responseValue);
-                if(gameResult > 0){
-                        console.log("You won");
-                        clientServerResult.innerHTML = "WON!! =D";
-                }
-                else if(gameResult === 0){
-                    console.log("You tied");
-                    clientServerResult.innerHTML = "DRAW!! :|";
-                }
-                else {
-                    console.log("You lost");
-                    clientServerResult.innerHTML = "LOST!! :(";
-                }
+                clientServerResult.innerHTML = translateGameResult(gameResult);
                 break;
             }
             case "server":{
@@ -58,18 +60,7 @@ function setupConnection(){
                 var clientChoice = pickRandomHand();
                 clientResponse.innerHTML = "Client: "+clientChoice;
                 var gameResult = checkWin(clientChoice, msg.responseValue);
-                if (gameResult > 0) {
-                    console.log("You won");
-                    serverClientResult.innerHTML = "WON!! =D";
-                }
-                else if (gameResult === 0) {
-                    console.log("You tied");
-                    serverClientResult.innerHTML = "DRAW!! :|";
-                }
-                else {
-                    console.log("You lost");
-                    serverClientResult.innerHTML = "LOST!! :(";
-                }
+                serverClientResult.innerHTML = translateGameResult(gameResult);
                 break;
             }
         }
@@ -88,16 +79,19 @@ function setupConnection(){
     }, false);
 }
 
-// INITIALIZE GAME:
-window.addEventListener("load",setupConnection,false);
-
 // ON HTML FUNCTIONS:
 function sendChoice(selection){
     // TODO: Check for connection state before sending msg
     clientOutgoing.innerHTML = "You: "+selection;
-    ws.send(selection);
+    if(ws.readyState !== ws.OPEN) setupConnection();        
+        ws.send(selection);
 }
 
+// Parses a str with the form "origin-clientMsg-serverMsg"
+// Sends back an object with the following properties:
+// .type = origin
+// .requestValue = clientMsg
+// .responseValue = serverMsg
 function parseMsg(str){
     var splitMsg = str.split('-');
     var msg = {};
@@ -111,14 +105,25 @@ function parseMsg(str){
 // Checks the outcome of a rock paper scissor game
 function checkWin(playerOne, playerTwo){
     console.log("comparing: "+playerOne+" "+playerTwo);
+   // Both players tied
    if(playerOne == playerTwo) return 0;
    
-   if((playerOne === "Rock" && playerTwo === "Scissors") 
-   || (playerOne === "Paper" && playerTwo === "Rock")
-   || (playerOne === "Scissors" && playerTwo === "Paper"))
-   return 1;
+   // Player one winning conditions
+    if((playerOne === "Rock" && playerTwo === "Scissors") 
+    || (playerOne === "Paper" && playerTwo === "Rock")
+    || (playerOne === "Scissors" && playerTwo === "Paper"))
+        return 1;
    
+   // If none of the above then player one lost
    return -1
+}
+
+function translateGameResult(gameResult){
+    var resultStr = "";
+    resultStr = (gameResult > 0) ? 
+                "WON!! =D" : 
+                (gameResult === 0)? "DRAW!! :|": "LOST!! :(";
+    return resultStr;
 }
 
 function pickRandomHand() {
@@ -131,3 +136,6 @@ function pickRandomHand() {
     }
     return choice;
 }
+
+// INITIALIZE GAME:
+window.addEventListener("load", initiliazeGame, false);

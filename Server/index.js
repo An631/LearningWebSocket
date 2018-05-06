@@ -17,7 +17,9 @@ console.log("RockPaperScissor listening on port: "+port);
 // Set a timeout for server to play with a random client every 3 seconds
 setTimeout(sendMessage, 3000);
 
-// HANDLER FUNCTIONS //
+// CONNECTION HANDLER FUNCTIONS //
+
+// Handles new connections from clients.
 function connectHandler(conn){
     // identify the connected client
     conn.identifier = conn.remoteAddress;
@@ -27,6 +29,7 @@ function connectHandler(conn){
     console.log("New Client connected: "+conn.identifier);
 }
 
+// Handle messages coming from clients.
 function messageHandler(message){
     var clientChoice = message.utf8Data.toString();
     console.log("Received message from client: "+this.identifier+" message: "+clientChoice);
@@ -35,6 +38,7 @@ function messageHandler(message){
     console.log("Answered with: "+serverChoice);
 }
 
+// Removes a client whenever the connection with him is closed.
 function closeHandler(){
     // Find the closed client connection in our list of clients
     var index = clients.indexOf(this);
@@ -45,12 +49,15 @@ function closeHandler(){
         return;
     }
 
+    // Remove the client form our clients list.
     clients.splice(index,1);
     console.log("Client "+clientID+" was removed successfully from registered clients");
 }
 
+// Sends a message to a random client with a random hand to play.
+// This function sets up a timer from 2 to 5 seconds to be called again later.
 function sendMessage(){
-    // Setting another timer for next play
+    // Setting another timer for next play in 2 to 5 seconds
     var timer = ((Math.random() * 5)+2) * 1000;
     setTimeout(sendMessage, timer);
     // Make sure there are connected users to play with
@@ -65,6 +72,7 @@ function sendMessage(){
     
 }
 
+// UTILITY FUNCTIONS //
 function pickRandomHand(){
     var randomChoice = Math.floor((Math.random() * 3) + 1);
     var serverChoice = "";

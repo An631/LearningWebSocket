@@ -10,6 +10,8 @@ The server can also send a rock paper scissors request to the client. The client
 
 Both games are played in different panes so that the user can see the server and the client interacting in parallel. The client can only control the client side requests by clicking a button.
 
+To see demo visit https://an631.github.io/UltimateRockPaperScissorServerReloadedTenkaichiBudokaiOmega/Client/index.html
+
 Created to learn how to implement a simple websocket.
 Game designed by Angel Duran.
 May/4/2018
